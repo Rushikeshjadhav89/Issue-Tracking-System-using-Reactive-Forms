@@ -12,16 +12,28 @@ export class IssueListComponent implements OnInit {
   showReportIssue = false;
 
   issues: Issue [] = []
+  selectedIssue: Issue | null = null;
+
   constructor(private issueService: IssuesService){ }
   ngOnInit(): void {
     this.getIssues()
   }
 
-  getIssues(){
+  private getIssues(){
     this.issues = this.issueService.getPendingIssues()
   }
   onCloseReport(){
     this.showReportIssue = false
     this.getIssues()
   }
+
+  onConfirm(confirm: boolean){
+    if(confirm &&  this.selectedIssue){
+      this.issueService.compoleteIssue(this.selectedIssue)
+      this.getIssues
+    }
+    this.selectedIssue = null 
+  }
+
+  
 }

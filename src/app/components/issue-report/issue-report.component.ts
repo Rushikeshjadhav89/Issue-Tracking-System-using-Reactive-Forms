@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {ReactiveFormsModule, FormBuilder, FormControl, Validators, FormGroup} from "@angular/forms"
+
+import { Issue } from 'src/app/shared/interfaces/issue';
 import { IssuesService } from 'src/app/shared/services/issues.service';
 
 
@@ -12,21 +14,32 @@ export class IssueReportComponent implements OnInit {
 
   @Output () formClose = new EventEmitter()
 
-
   issueForm : FormGroup | undefined
+  suggestions: Issue[]= [];
+  
+
   constructor(private formBuilder: FormBuilder, private issueService: IssuesService){ }
   ngOnInit(): void {
     this.issueForm = this.formBuilder.group(
       {
-        title : [''],
+        title : ['',[Validators.required]],
         description : [''],
-        priority: [''],
-        type : ['']
-      }
-    )
+        priority: ['',[Validators.required]],
+        type : ['',[Validators.required]]
+      })
+      this.issueForm.controls['title'].valueChanges.subscribe((
+        title: string) => {
+        this.suggestions = 
+        this.issueService.getSuggestions(title);
+        });
   }
 
   addIssue(){
+
+    if(this.issueForm && this.issueForm.invalid){
+      this.issueForm.markAllAsTouched();
+      return;
+    }
     this.issueService.createIssue(this.issueForm?.value)
     this.formClose.emit()
   }

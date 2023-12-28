@@ -9,13 +9,17 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { IssueListComponent } from './components/issue-list/issue-list.component';
 import { ReactiveFormsModule, FormBuilder, FormsModule } from '@angular/forms';
 import { IssueReportComponent } from './components/issue-report/issue-report.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     IssueListComponent,
-    IssueReportComponent
+    IssueReportComponent,
+    ConfirmDialogComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -24,7 +28,8 @@ import { IssueReportComponent } from './components/issue-report/issue-report.com
     ClarityModule,
     DragDropModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+   
   ],
   providers: [],
   bootstrap: [AppComponent]
